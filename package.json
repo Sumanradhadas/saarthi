@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "browser-image-compression": "^2.0.2",
-    "sharp": "^0.34.3"
-  }
-}
