@@ -1,0 +1,145 @@
+📌 PROJECT NAME:
+SAARthi – Smart AI Test & Learning Companion
+
+🎯 PURPOSE:
+To create an interactive, AI-based test platform where students can:
+
+Practice MCQs and write short/long answers (by uploading handwritten images)
+
+Get real-time AI feedback (just like a personal mentor/teacher)
+
+Feel supported, motivated, and guided throughout the test
+
+Prepare effectively for their retake of subject 312412 – Pharmacology, Pathology I & II, and Genetics
+
+🌐 PLATFORM STRUCTURE: One-Page Web App (Slide-Based UI)
+✅ 1. Start Screen:
+Welcomes student
+
+Shows SAARthi’s character (image + text intro)
+
+May ask a fun verification question like: “What’s your brother’s favorite dish?”
+
+✅ 2. MCQ Slides:
+One question at a time
+
+Student clicks an option
+
+SAARthi instantly replies with:
+
+Whether it’s correct
+
+Explanation if it's wrong
+
+Friendly feedback (like a real tutor)
+
+✅ 3. Short/Long Answer Slides:
+Student uploads one or more images of handwritten answers
+
+System extracts text (OCR) and sends it to AI
+
+SAARthi gives:
+
+Content review (what’s missing or good)
+
+Feedback based on marking scheme
+
+Suggestions for full marks
+
+Motivational touch (if the answer is poor or great)
+
+✅ 4. Fun / Meme Break Slide:
+After 3–4 serious questions, it shows:
+
+A meme
+
+Fun fact or joke
+
+Personal question like: "What's your favorite chai spot in college?"
+
+Keeps student engaged, relaxed
+
+✅ 5. End Screen:
+Shows performance summary
+
+Encourages student to improve
+
+May say something like: “You’re stronger than you think. Let’s try again!”
+
+Option to retake test or go back to questions
+
+🤖 SAARthi AI PERSONALITY (AI Behavior)
+✅ Key Traits:
+Friendly, Motivational, Slightly Funny
+
+Acts like a personal tutor who knows you
+
+Gives constructive criticism with kindness
+
+Keeps things light with breaks and jokes
+
+✅ Feedback Style:
+For MCQ: Detailed explanation, even when answer is wrong
+
+For Image-based answers:
+
+Uses OCR (Tesseract.js) to read
+
+Analyzes structure and content
+
+Refers to marking schemes
+
+Suggests improvements
+
+📦 FUNCTIONALITIES SUMMARY
+Feature	Description
+MCQs	Auto-evaluated + AI explanation
+Short/Long Answers	Image uploads + AI text analysis
+AI Feedback	Real-time, friendly, smart
+Slide UI	Each question is one slide – smooth navigation
+Fun Breaks	Memes or personal questions in-between
+Marking Schemes	Used by AI to give quality feedback
+No Coding to Add Tests	Questions come from a JSON file or Google Sheet
+Looks Modern	Tailwind CSS + animations, mobile responsive
+
+🛠️ TECH STACK (All Free Tools)
+Part	Tool
+Frontend	HTML + TailwindCSS + JavaScript
+Slide UI	Custom or Swiper.js
+Backend	Supabase – for storing data and images
+OCR	Tesseract.js – reads text from images
+AI	OpenAI GPT-4o – processes and gives intelligent feedback
+Hosting	Replit (while building), then Vercel or Netlify (free hosting)
+
+🧑‍🎓 WHO IT HELPS
+BSc Nursing Semester 4 students
+
+Especially those preparing for a retest
+
+Those needing help with:
+
+Pharmacology
+
+Pathology I & II
+
+Genetics
+
+🔐 USER FLOW (Student Experience)
+Landing – SAARthi welcomes and asks a personal question
+
+Start Test – MCQs, then image-based answers
+
+Fun Interruptions – Every few questions
+
+Instant Feedback – For each response
+
+Final Summary – Motivation and performance recap
+
+🔚 FINAL GOALS
+Make testing and learning fun, friendly, and effective
+
+Remove fear of failure for struggling students
+
+Help them pass confidently
+
+Later: Add more subjects, levels, or even AI-driven study plans
