@@ -1,97 +1,11 @@
-import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 
 interface WelcomeSlideProps {
   onNext: () => void;
 }
 
 export function WelcomeSlide({ onNext }: WelcomeSlideProps) {
-  const [answer, setAnswer] = useState('');
-  const [isVerifying, setIsVerifying] = useState(false);
-  const [error, setError] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const verifyAnswer = async () => {
-    if (isVerifying || !answer.trim()) return;
-
-    setIsVerifying(true);
-    setError('');
-
-    const normalizedAnswer = answer.toLowerCase().trim();
-
-    if (normalizedAnswer === 'dosa' || normalizedAnswer === 'masala dosa') {
-      // Animate success
-      setTimeout(() => {
-        onNext();
-      }, 1000);
-    } else {
-      setError('Hmm, that\'s not what I was thinking! Try again 😊');
-      setIsVerifying(false);
-    }
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !isVerifying && answer.trim()) {
-      e.preventDefault();
-      e.stopPropagation();
-      verifyAnswer();
-    }
-  };
-
-  const handleButtonClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    verifyAnswer();
-  };
-
-  const handleInputClick = (e: React.MouseEvent) => {
-    // Prevent any parent handlers from interfering
-    e.stopPropagation();
-    if (inputRef.current) {
-      inputRef.current.focus();
-      // Ensure the input is properly focused and ready for typing
-      setTimeout(() => {
-        if (inputRef.current) {
-          inputRef.current.focus();
-        }
-      }, 0);
-    }
-  };
-
-  const handleInputTouch = (e: React.TouchEvent) => {
-    // Handle touch events for mobile devices
-    e.stopPropagation();
-    if (inputRef.current) {
-      inputRef.current.focus();
-      // Ensure the input is properly focused and ready for typing
-      setTimeout(() => {
-        if (inputRef.current) {
-          inputRef.current.focus();
-        }
-      }, 0);
-    }
-  };
-
-  const handleInputFocus = () => {
-    setError(''); // Clear any error when input is focused
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAnswer(e.target.value);
-    setError(''); // Clear error when typing
-  };
-
-  // Auto focus the input when component mounts
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (inputRef.current && !isVerifying) {
-        inputRef.current.focus();
-      }
-    }, 150);
-    return () => clearTimeout(timer);
-  }, [isVerifying]);
 
   return (
     <div className="h-full flex flex-col items-center justify-center p-4 sm:p-6 bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 relative overflow-hidden">
@@ -132,15 +46,85 @@ export function WelcomeSlide({ onNext }: WelcomeSlideProps) {
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
           <motion.div 
-            className="w-24 h-24 sm:w-32 sm:h-32 mx-auto bg-gradient-to-br from-primary via-accent to-secondary rounded-full flex items-center justify-center text-white text-4xl sm:text-6xl shadow-2xl shadow-primary/20"
+            className="relative w-24 h-24 sm:w-32 sm:h-32 mx-auto"
             whileHover={{ scale: 1.1, rotate: 5 }}
             whileTap={{ scale: 0.95 }}
           >
-            <motion.i 
-              className="fas fa-robot"
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-            ></motion.i>
+            {/* Outer glow ring */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-accent/30 to-secondary/30 rounded-full blur-md animate-pulse"></div>
+            
+            {/* Main icon container */}
+            <div className="relative w-full h-full bg-gradient-to-br from-primary via-accent to-secondary rounded-full flex items-center justify-center shadow-2xl shadow-primary/30 border-4 border-white/20">
+              {/* Inner highlight */}
+              <div className="absolute top-2 left-2 w-4 h-4 sm:w-6 sm:h-6 bg-white/30 rounded-full blur-sm"></div>
+              
+              {/* Robot icon with enhanced styling */}
+              <motion.div
+                className="relative text-white text-3xl sm:text-5xl"
+                animate={{ 
+                  scale: [1, 1.1, 1],
+                  rotateY: [0, 10, 0]
+                }}
+                transition={{ 
+                  duration: 3, 
+                  repeat: Infinity, 
+                  ease: "easeInOut",
+                  delay: 0.5 
+                }}
+              >
+                <i className="fas fa-robot drop-shadow-lg"></i>
+                
+                {/* Animated eyes */}
+                <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                  <motion.div
+                    className="flex space-x-1"
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <div className="w-1 h-1 bg-blue-300 rounded-full"></div>
+                    <div className="w-1 h-1 bg-blue-300 rounded-full"></div>
+                  </motion.div>
+                </div>
+              </motion.div>
+              
+              {/* Decorative particles */}
+              <motion.div
+                className="absolute -top-1 -right-1 w-2 h-2 bg-accent rounded-full"
+                animate={{ 
+                  scale: [0, 1, 0],
+                  opacity: [0, 1, 0]
+                }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity,
+                  delay: 0.8
+                }}
+              ></motion.div>
+              <motion.div
+                className="absolute -bottom-1 -left-1 w-2 h-2 bg-secondary rounded-full"
+                animate={{ 
+                  scale: [0, 1, 0],
+                  opacity: [0, 1, 0]
+                }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity,
+                  delay: 1.2
+                }}
+              ></motion.div>
+            </div>
+            
+            {/* Orbiting elements */}
+            <motion.div
+              className="absolute inset-0"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            >
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 w-1 h-1 bg-primary rounded-full"></div>
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1 w-1 h-1 bg-accent rounded-full"></div>
+              <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1 w-1 h-1 bg-secondary rounded-full"></div>
+              <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1 w-1 h-1 bg-primary rounded-full"></div>
+            </motion.div>
           </motion.div>
         </motion.div>
 
@@ -172,74 +156,19 @@ export function WelcomeSlide({ onNext }: WelcomeSlideProps) {
           Your Smart AI Test & Learning Companion! I'm here to help you ace your Pharmacology, Pathology, and Genetics retake. Let's make learning fun! 🎯
         </motion.p>
 
-        {/* Verification Question */}
+        {/* Let's Begin Button */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.5 }}
         >
-          <p className="text-gray-700 mb-4 font-medium text-sm sm:text-base">
-            Quick question to get started: <br className="hidden sm:block" />
-            <span className="text-primary font-semibold">What's your brother's favorite dish?</span> 😉
-          </p>
-          <div className="space-y-3">
-            <Input
-              ref={inputRef}
-              type="text"
-              value={answer}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyPress}
-              onClick={handleInputClick}
-              onTouchStart={handleInputTouch}
-              onFocus={handleInputFocus}
-              placeholder="Type your answer..."
-              className={`text-center transition-all duration-300 text-sm sm:text-base h-12 sm:h-auto cursor-text select-text focus:ring-2 focus:ring-primary/20 focus:ring-offset-2 focus:outline-none ${error ? 'border-red-400 bg-red-50 animate-shake focus:border-red-400 focus:ring-red-200' : 'border-primary/30 focus:border-primary hover:border-primary/50 focus:bg-white'}`}
-              disabled={isVerifying}
-              autoComplete="off"
-              tabIndex={0}
-            />
-
-            {error && (
-              <motion.p 
-                className="text-red-500 text-sm"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-              >
-                {error}
-              </motion.p>
-            )}
-
-            <Button 
-              onClick={handleButtonClick}
-              onTouchStart={handleButtonClick}
-              disabled={isVerifying || !answer.trim()}
-              className="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 sm:py-4 font-semibold hover:from-primary/90 hover:to-secondary/90 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-primary/25 text-sm sm:text-base mobile-friendly"
-              type="button"
-            >
-              {isVerifying ? (
-                <motion.div 
-                  className="flex items-center"
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 0.5, repeat: Infinity }}
-                >
-                  <i className="fas fa-spinner fa-spin mr-2"></i>
-                  Checking...
-                </motion.div>
-              ) : (
-                <>
-                  Let's Begin! <i className="fas fa-arrow-right ml-2"></i>
-                </>
-              )}
-            </Button>
-          </div>
-          <motion.p 
-            className="text-xs sm:text-sm text-gray-500 mt-3 px-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5 }}
+          <Button 
+            onClick={onNext}
+            className="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 sm:py-4 font-semibold hover:from-primary/90 hover:to-secondary/90 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-primary/25 text-sm sm:text-base mobile-friendly"
+            type="button"
           >
-            💡 Hint: It's a South Indian dish that starts with 'D'
-          </motion.p>
+            Let's Begin! <i className="fas fa-arrow-right ml-2"></i>
+          </Button>
         </motion.div>
       </motion.div>
     </div>
